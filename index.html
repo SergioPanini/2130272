@@ -1,0 +1,102 @@
+<html>
+<head>
+
+  <script type="text/javascript" src="https://www.gstatic.com/charts/loader.js"></script>
+    <script type="text/javascript">
+      google.charts.load('current', {'packages':['line']});
+      
+
+    function drawChart() {
+
+      var data = new google.visualization.DataTable();
+      data.addColumn('number', 'X');
+      data.addColumn('number', 'Y');
+
+      data.addRows(gresult);
+
+      var options = {
+        chart: {
+          title: 'График функции f(x)',
+          subtitle: ''
+        },
+        width: 900,
+        height: 500,
+        axes: {
+          x: {
+            0: {side: 'top'}
+          }
+        }
+      };
+
+      var chart = new google.charts.Line(document.getElementById('line_top_x'));
+
+      chart.draw(data, google.charts.Line.convertOptions(options));
+    }
+
+    function f(x, f_repl_x){
+        let req = f_repl_x.split('x').join('(x)').split('x').join(x);
+        console.log('req: ', req);
+
+        return eval(req);
+
+    }
+
+    var gresult = new Array();
+
+    function get_data(){
+        console.log('click');
+        var x_0 = document.getElementById('x_0').value;
+        var x_1 = document.getElementById('x_1').value;
+        var steps = document.getElementById('steps').value;
+        var f_x = document.getElementById('f').value;
+        
+        
+        
+        if(x_0 != '' && x_1 != '' && steps !='' && f_x !=''){
+            console.log('draw');
+            
+            let x_0_f = parseFloat(x_0);
+            let x_1_f = parseFloat(x_1);
+            let steps_i = parseInt(steps);
+            let f_repl_x = f_x.split('^').join('**').split('sqrt').join('Math.sqrt');
+
+            let dx = (x_1_f - x_0_f) / steps_i;
+            gresult = [];
+
+            console.log('x_0: ', x_0_f);
+            console.log('x_1: ', x_1_f);
+            console.log('dx: ', dx);
+            console.log('steps: ', steps);
+            console.log('f: ', f_repl_x);
+
+
+            for(var i = 1; i < steps_i; i++){
+                gresult.push([x_0_f + i * dx, f(x_0_f + i * dx, f_repl_x)]);
+            }
+            console.log(gresult);
+            google.charts.setOnLoadCallback(drawChart);
+        }
+        
+    }
+  </script>
+</head>
+
+<body>
+    <div style="margin:0 25% 0 25%;
+    width:50%;">
+    <div style="text-align: center;">
+        <form name="main_from">
+            <label>f(x) = </label><input type="text" size="40" id='f'></input>
+            <p>Выберите диапазон х</p>
+            <input type="text" id="x_0" size="5" value="-5"></input> < x < <input type="text" id='x_1' size="5" value='5'></input>
+            <br>
+            <label>Выберите количество точек</label><br>
+            <input type="text" size="5" id='steps' value="1000"></input>
+            <br>
+            <input type="button" onclick='get_data()' value="Нарисовать">
+        </form>    
+      </div>
+  <div id="line_top_x"></div>
+</div>
+</body>
+</html>
