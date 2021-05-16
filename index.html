@@ -81,19 +81,20 @@
   </script>
 </head>
 
-<body>
+<body style="background-color:rgb(208, 236, 197)">
     <div style="margin:0 25% 0 25%;
     width:50%;">
-    <div style="text-align: center;">
+    <div style="text-align: center; ">
         <form name="main_from">
             <label>f(x) = </label><input type="text" size="40" id='f'></input>
+            <p>Поддерживаются операции +-*/^sqrt</p>
             <p>Выберите диапазон х</p>
             <input type="text" id="x_0" size="5" value="-5"></input> < x < <input type="text" id='x_1' size="5" value='5'></input>
             <br>
-            <label>Выберите количество точек</label><br>
-            <input type="text" size="5" id='steps' value="1000"></input>
+            <label style="margin-top: 10px;">Выберите количество точек</label><br>
+            <input type="text" size="5" id='steps' value="1000" style="margin-top: 10px;"></input>
             <br>
-            <input type="button" onclick='get_data()' value="Нарисовать">
+            <input type="button" onclick='get_data()' value="Нарисовать" style="margin-top: 10px;">
         </form>    
       </div>
   <div id="line_top_x"></div>
